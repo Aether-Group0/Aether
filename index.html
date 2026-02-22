@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aether | Technical Collective</title>
+    <link rel="shortcut icon" href="logo.ico" type="image/x-icon">
+    <style type="text/css">
+        /* THEME & LAYOUT */
+        body { background-color: #121212; color: #d4d4d4; padding: 40px 20px; margin: 0; font-family: 'Verdana', sans-serif; line-height: 1.8; }
+        .main-wrapper { max-width: 1100px; margin: 0 auto; text-align: justify; background-color: #1e1e1e; padding: 50px; border: 1px solid #333; box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
+        
+        /* HEADER */
+        .header-box { background-color: #2d3e3e; padding: 30px; border-bottom: 2px solid #3f5151; display: flex; align-items: center; gap: 30px; margin-bottom: 50px; }
+        .logo-img { width: 80px; height: 80px; filter: invert(1); }
+        h2 { font-size: 2em; color: #00cccc; margin: 0; }
+        .article-meta { color: #5cb85c; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9em; margin-bottom: 40px; display: block; }
+        h1.article-title { font-size: 3em; color: #ffffff; margin-bottom: 10px; text-align: left; letter-spacing: -1px; }
+
+        /* NAVIGATION */
+        .nav-menu { margin-bottom: 40px; padding: 15px; background-color: #33332d; border: 1px solid #44443c; text-align: center; }
+        .nav-menu a { color: #d8d8b8; margin: 0 15px; text-decoration: none; font-weight: bold; }
+        .nav-menu a:hover { color: #ffffff; }
+
+        /* SECRET TERMINAL */
+        #secret-menu { display: none; background: #222; border: 1px dashed #00cccc; padding: 25px; margin: 20px 0; border-radius: 4px; }
+        #secret-menu textarea { width: 100%; height: 100px; background: #111; color: #00cccc; border: 1px solid #444; padding: 15px; box-sizing: border-box; font-family: 'Courier New', monospace; margin-bottom: 15px; }
+        #post-button { background-color: #00cccc; color: #111; border: none; padding: 12px 25px; cursor: pointer; font-weight: bold; text-transform: uppercase; }
+        #status-indicator { margin-top: 15px; font-size: 0.8em; color: #ffe600; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* NEWS FEED */
+        .news-item { border-bottom: 1px solid #333; padding: 20px 0; font-family: 'Courier New', monospace; text-align: left; }
+        .news-item strong { color: #5cb85c; }
+        .post-actions { margin-top: 10px; display: flex; gap: 15px; align-items: center; }
+        .heart-btn { background: none; border: 1px solid #444; color: #ff4d4d; cursor: pointer; padding: 2px 10px; border-radius: 4px; transition: 0.2s; }
+        .heart-btn:hover { background: rgba(255, 77, 77, 0.1); }
+        .delete-btn { background: none; border: 1px solid #444; color: #888; cursor: pointer; padding: 2px 10px; border-radius: 4px; display: none; }
+        .delete-btn:hover { border-color: #ff4d4d; color: #ff4d4d; }
+
+        /* PROJECT TABLE */
+        .project-table { width: 100%; border-collapse: collapse; margin: 2em 0; background-color: #161616; text-align: left; }
+        .project-table td { padding: 30px; border: 1px solid #333; }
+        .project-name { font-size: 1.4em; font-weight: bold; }
+        .project-table a { color: #00cccc; text-decoration: none; font-weight: bold; }
+        .project-table a:hover { text-decoration: underline; }
+
+        /* DECORATION */
+        .dropcap { float: left; font-size: 4.2em; line-height: 0.8; padding-right: 12px; color: #00cccc; font-weight: bold; }
+        blockquote { border-left: 3px solid #5cb85c; margin: 30px 0; padding: 10px 30px; font-style: italic; background-color: #252525; color: #eee; }
+        .discord-box { background: linear-gradient(45deg, #5865F2, #4752C4); color: white; padding: 30px; text-align: center; border-radius: 4px; margin-top: 40px; }
+        .discord-link { color: white; text-decoration: underline; font-weight: bold; }
+        h3 { font-size: 1.3em; padding: 10px 20px; background-color: #2d3e3e; color: #00cccc; margin: 2em 0 1em 0; border-left: 4px solid #00cccc; text-align: left; }
+        
+        .hidden { display: none; }
+        .pulse { animation: pulse-animation 1.5s infinite; }
+        @keyframes pulse-animation { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        .footer { margin-top: 80px; text-align: center; font-size: 0.9em; color: #666; border-top: 1px solid #333; padding-top: 30px; }
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper">
+        <div class="header-box">
+            <img src="logo.png" alt="Aether" class="logo-img">
+            <div>
+                <h2 style="margin:0;">Aether Collective</h2>
+                <span style="color: #aaa;">Digital Sovereignty through Code</span>
+            </div>
+        </div>
+
+        <div class="nav-menu">
+            <a href="#article">Journal</a> | 
+            <a href="sf.html">SocialFinder</a> | 
+            <a href="spark.html">Spark Language</a> | 
+            <a href="restart-wiz.html">Restart-WIZ</a> | 
+            <a href="https://discord.gg/CD7NMuq4" target="_blank" style="color: #7289da;">Discord</a>
+        </div>
+
+        <div id="secret-menu">
+            <h3 style="margin-top:0; color:#00cccc;">Terminal Access: Post News</h3>
+            <textarea id="post-input" placeholder="Enter encrypted transmission..."></textarea>
+            <button id="post-button" onclick="publishPost()">DEPLOY TO FEED</button>
+            <div id="status-indicator" class="hidden pulse">>> COMMUNICATING WITH DATABANK...</div>
+        </div>
+
+        <div id="posts-and-news">
+            <h3>Recent Broadcasts</h3>
+            <div id="news-feed">
+                <p style="color: #666; text-align: center;"><em>Synchronizing with Aether databank...</em></p>
+            </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #333; margin: 60px 0;">
+
+        <a name="article"></a>
+        <span class="article-meta">Technical Journal // Vol. 01 // 2026</span>
+        <h1 class="article-title">The Ghost in the Machine: Understanding Aether</h1>
+        
+        <p><span class="dropcap">I</span>n the modern digital era, the "Aether" represents the invisible layers of data, encryption, and connectivity that define our reality. The Aether Collective was founded on a singular principle: <strong>transparency is the only true security.</strong> While corporate software becomes more opaque, hiding trackers and vulnerabilities behind proprietary walls, our mission is to build tools that peel back those layers.</p>
+        
+        <blockquote>
+            "Security through obscurity is a fallacy. Real safety comes from the collective eyes of an informed community."
+            <br>— Aether Technical Lead
+        </blockquote>
+
+        <p>We believe that code should be a scalpel, not a shield. Whether we are developing OSINT frameworks or auditing system transitions, our approach remains rooted in the belief that information sharing is a powerful, positive good.</p>
+
+        <h3>Current Tooling & Releases:</h3>
+        <table class="project-table">
+            <tr>
+                <td width="35%"><span class="project-name" style="color:#ffe600;">Spark Language</span></td>
+                <td>High-speed system automation with a minimalist syntax.<br><a href="spark.html">Documentation &rarr;</a></td>
+            </tr>
+            <tr>
+                <td><span class="project-name" style="color:#4db8ff;">SocialFinder</span></td>
+                <td>OSINT correlation engine for username footprinting.<br><a href="sf.html">Access Tool &rarr;</a></td>
+            </tr>
+            <tr>
+                <td><span class="project-name" style="color:#a855f7;">Restart-WIZ</span></td>
+                <td>The "One-Click" solution for full system migration.<br><a href="restart-wiz.html">Open Wizard &rarr;</a></td>
+            </tr>
+        </table>
+
+        <div class="discord-box">
+            Join our secure communications array: 
+            <a href="https://discord.gg/CD7NMuq4" target="_blank" class="discord-link">Join the Discord Collective</a>
+        </div>
+
+        <div class="footer">
+            AETHER COLLECTIVE // SECURING THE UNSEEN // 2026
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIG ---
+        const BIN_ID = '699a9498ae596e708f3e7e13';
+        const API_KEY = '$2a$10$id/Hj5xdCzx39WGhwmEo8..VcEYFrRqD2EDxTZIiOY94yTcAH/6PW'; 
+        const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+        const AUTH_HASH = "NzY4OTAxMzQ/Pg=="; // Password: 76890134?>
+
+        let isAdmin = false;
+
+        // --- SECRET TRIGGER (ss) ---
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
+            window.keySeq = (window.keySeq || "") + e.key.toLowerCase();
+            if (window.keySeq.length > 2) window.keySeq = window.keySeq.substring(window.keySeq.length - 2);
+            if (window.keySeq === "ss") {
+                const pw = prompt("ENTER PASSPHRASE:");
+                if (pw && btoa(pw) === AUTH_HASH) {
+                    isAdmin = true;
+                    document.getElementById('secret-menu').style.display = 'block';
+                    document.querySelectorAll('.delete-btn').forEach(b => b.style.display = 'inline-block');
+                    console.log("Terminal Access Granted.");
+                }
+                window.keySeq = "";
+            }
+        });
+
+        // --- FETCH DATABANK ---
+        async function loadPosts() {
+            try {
+                const res = await fetch(`${BIN_URL}/latest`, { 
+                    headers: { 'X-Access-Key': API_KEY },
+                    cache: 'no-store' 
+                });
+                const data = await res.json();
+                const feed = document.getElementById('news-feed');
+                
+                if (data.record && Array.isArray(data.record)) {
+                    feed.innerHTML = '';
+                    data.record.forEach((post, index) => {
+                        const pId = post.id || `legacy-${index}`;
+                        const div = document.createElement('div');
+                        div.className = 'news-item';
+                        div.innerHTML = `
+                            <strong>[${post.date}]</strong><br>
+                            <span style="display:block; margin: 10px 0;">${post.text}</span>
+                            <div class="post-actions">
+                                <button class="heart-btn" onclick="likePost('${pId}')">❤ ${post.likes || 0}</button>
+                                <button class="delete-btn" style="display: ${isAdmin ? 'inline-block' : 'none'}" onclick="deletePost('${pId}')">DELETE</button>
+                            </div>
+                        `;
+                        feed.appendChild(div);
+                    });
+                }
+            } catch (err) { console.error("Sync Error", err); }
+        }
+
+        // --- DEPLOY POST ---
+        async function publishPost() {
+            const input = document.getElementById('post-input');
+            const status = document.getElementById('status-indicator');
+            if (!input.value.trim()) return;
+
+            status.classList.remove('hidden');
+
+            try {
+                const res = await fetch(`${BIN_URL}/latest`, { headers: { 'X-Access-Key': API_KEY } });
+                const current = await res.json();
+                let posts = Array.isArray(current.record) ? current.record : [];
+                
+                posts.unshift({ 
+                    id: Date.now().toString(), 
+                    date: new Date().toLocaleString(), 
+                    text: input.value.trim(), 
+                    likes: 0 
+                });
+
+                await updateBin(posts);
+                input.value = "";
+                await loadPosts();
+            } catch (err) { alert("Deployment failed."); }
+            finally { status.classList.add('hidden'); }
+        }
+
+        // --- INTERACTION: LIKE ---
+        async function likePost(pId) {
+            try {
+                const res = await fetch(`${BIN_URL}/latest`, { headers: { 'X-Access-Key': API_KEY } });
+                const data = await res.json();
+                let posts = data.record;
+                const idx = posts.findIndex((p, i) => (p.id === pId || `legacy-${i}` === pId));
+                
+                if (idx !== -1) {
+                    posts[idx].likes = (posts[idx].likes || 0) + 1;
+                    await updateBin(posts);
+                    await loadPosts();
+                }
+            } catch (err) { console.error("Interaction failed."); }
+        }
+
+        // --- INTERACTION: DELETE ---
+        async function deletePost(pId) {
+            if (!confirm("Confirm permanent deletion from databank?")) return;
+            try {
+                const res = await fetch(`${BIN_URL}/latest`, { headers: { 'X-Access-Key': API_KEY } });
+                const data = await res.json();
+                let updated = data.record.filter((p, i) => (p.id !== pId && `legacy-${i}` !== pId));
+                
+                await updateBin(updated);
+                await loadPosts();
+            } catch (err) { alert("Purge failed."); }
+        }
+
+        // --- API HELPER ---
+        async function updateBin(data) {
+            await fetch(BIN_URL, {
+                method: 'PUT',
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    'X-Access-Key': API_KEY, 
+                    'X-Bin-Versioning': 'false' 
+                },
+                body: JSON.stringify(data)
+            });
+        }
+
+        // Initial Sync
+        loadPosts();
+    </script>
+</body>
+</html>
