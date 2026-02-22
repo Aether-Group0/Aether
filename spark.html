@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spark Docs | The Complete Language Guide</title>
+    <link rel="shortcut icon" href="logo3.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ffe600;
+            --bg: #0b0b0b;
+            --sidebar: #141414;
+            --panel: #1a1a1a;
+            --text: #ffffff;
+            --text-dim: #999;
+            --code-blue: #569cd6;
+            --code-orange: #ce9178;
+        }
+
+        * { box-sizing: border-box; transition: all 0.2s ease; }
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- SIDEBAR --- */
+        nav {
+            background: var(--sidebar);
+            border-right: 1px solid #222;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            width: 32px;
+            height: 32px;
+        }
+
+        .logo-text {
+            font-family: 'JetBrains Mono';
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .back-home {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 12px;
+            margin-bottom: 30px;
+            display: block;
+            padding-left: 5px;
+        }
+        .back-home:hover { color: var(--primary); }
+
+        .nav-group { margin-bottom: 30px; }
+        .nav-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #555;
+            margin-bottom: 12px;
+            padding-left: 10px;
+        }
+
+        nav button {
+            display: block;
+            width: 100%;
+            padding: 12px 15px;
+            color: var(--text-dim);
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-bottom: 4px;
+        }
+
+        nav button:hover { background: #222; color: white; }
+        nav button.active { background: var(--primary); color: black; font-weight: 700; }
+
+        /* --- CONTENT AREA --- */
+        main {
+            padding: 60px 10%;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .page { display: none; animation: slideUp 0.4s ease-out; }
+        .page.active { display: block; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 { font-size: 54px; font-weight: 800; margin: 0 0 20px 0; letter-spacing: -2px; }
+        h2 { font-size: 24px; color: var(--primary); margin-top: 40px; }
+        p { line-height: 1.8; color: var(--text-dim); font-size: 18px; max-width: 800px; }
+
+        /* --- DOWNLOAD BOX --- */
+        .download-container {
+            background: var(--panel);
+            border: 1px solid #333;
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 30px;
+            max-width: 800px;
+        }
+
+        .dl-button {
+            display: inline-block;
+            background: var(--primary);
+            color: #000;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+
+        .dl-button:hover { background: #fff; transform: translateY(-2px); }
+
+        /* --- COMPONENTS --- */
+        .code-block {
+            background: #000;
+            padding: 25px;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono';
+            border: 1px solid #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .code-block::after {
+            content: "SPARK SOURCE";
+            position: absolute;
+            top: 10px; right: 15px;
+            font-size: 9px; color: #444;
+        }
+
+        .cmd-table {
+            width: 100%;
+            border-spacing: 0;
+            margin-top: 20px;
+            background: var(--panel);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .cmd-table th, .cmd-table td { padding: 18px; text-align: left; border-bottom: 1px solid #222; }
+        .cmd-table th { background: #222; font-size: 12px; color: var(--text-dim); text-transform: uppercase; }
+
+        .tag { background: #333; padding: 2px 8px; border-radius: 4px; font-family: monospace; font-size: 14px; color: var(--primary); }
+        .kw { color: var(--code-blue); }
+        .str { color: var(--code-orange); }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo-container">
+            <img src="logo3.png" alt="Spark Logo" class="logo-img">
+            <div class="logo-text">SPARK</div>
+        </div>
+        <a href="index.html" class="back-home">← Back to Aether</a>
+        
+        <div class="nav-group">
+            <div class="nav-label">Foundations</div>
+            <button onclick="openPage('home', this)" class="active">Overview</button>
+            <button onclick="openPage('download', this)">Download</button>
+            <button onclick="openPage('variables', this)">Variables & Types</button>
+            <button onclick="openPage('io', this)">Input & Output</button>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-label">Logic</div>
+            <button onclick="openPage('conditions', this)">Conditions (if/else)</button>
+            <button onclick="openPage('loops', this)">Loops (while)</button>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-label">The OS</div>
+            <button onclick="openPage('system', this)">System Commands</button>
+            <button onclick="openPage('functions', this)">Functions</button>
+        </div>
+    </nav>
+
+    <main id="content">
+
+        <div id="home" class="page active">
+            <h1>The Spark Language</h1>
+            <p>Spark is a lightweight, high-speed automation language. It is designed to bridge the gap between simple batch scripts and complex programming with native system hooks.</p>
+            
+            <h2>Version 2.0 Updates</h2>
+            <ul>
+                <li><strong>Multiline Logic:</strong> Full support for <span class="tag">if/else</span> and <span class="tag">while</span> blocks.</li>
+                <li><strong>Code Reusability:</strong> Create reusable logic with the new <span class="tag">define</span> keyword.</li>
+                <li><strong>Advanced IO:</strong> Dynamic string concatenation for the <span class="tag">say</span> command.</li>
+            </ul>
+        </div>
+
+        <div id="download" class="page">
+            <h1>Getting Spark</h1>
+            <p>Spark is open-source and maintained on GitHub. You can download the latest binaries or build from source.</p>
+            
+            <div class="download-container">
+                <h2>Stable Release</h2>
+                <p>The latest stable version is ready for Windows environments.</p>
+                <a href="https://github.com/Aether-Group0/Spark" class="dl-button" target="_blank">Download via GitHub</a>
+            </div>
+        </div>
+
+        <div id="variables" class="page">
+            <h1>Variables</h1>
+            <p>Data is stored using the <span class="tag">set</span> keyword. Spark is dynamically typed—numbers, strings, and expressions are handled automatically.</p>
+            
+            <div class="code-block">
+                <span class="kw">set</span> user = <span class="str">"Admin"</span>;<br>
+                <span class="kw">set</span> health = 100;<br>
+                <span class="kw">set</span> status = health / 2;
+            </div>
+
+            <table class="cmd-table">
+                <tr><th>Action</th><th>Syntax</th></tr>
+                <tr><td>Assignment</td><td><code>set [name] = [value];</code></td></tr>
+                <tr><td>Math</td><td><code>set x = (10 + 5) * 2;</code></td></tr>
+                <tr><td>Variable Usage</td><td><code>say x;</code></td></tr>
+            </table>
+        </div>
+
+        <div id="io" class="page">
+            <h1>Input & Output</h1>
+            <p>Communicate with users through text-based console output and interactive dialog boxes.</p>
+            
+            <h2>The Say Command</h2>
+            <p>Prints data to the console. Version 2.0 now supports mixing strings and variables in one line:</p>
+            <div class="code-block">
+                <span class="kw">say</span> <span class="str">"Hello,"</span> username <span class="str">"!"</span>;
+            </div>
+
+            <h2>The Ask Command</h2>
+            <p>Interrupts execution to prompt the user for input via a dialog window.</p>
+            <div class="code-block">
+                <span class="kw">ask</span> age <span class="str">"How old are you?"</span>;
+            </div>
+        </div>
+
+        <div id="conditions" class="page">
+            <h1>Conditions</h1>
+            <p>Direct the flow of your script using <span class="tag">if</span> and <span class="tag">else</span>. Every block must be terminated with an <span class="tag">end</span> keyword.</p>
+            
+            <div class="code-block">
+                <span class="kw">if</span> score > 50<br>
+                &nbsp;&nbsp;<span class="kw">say</span> <span class="str">"You passed!"</span>;<br>
+                <span class="kw">else</span><br>
+                &nbsp;&nbsp;<span class="kw">say</span> <span class="str">"Try again."</span>;<br>
+                <span class="kw">end</span>;
+            </div>
+        </div>
+
+        <div id="loops" class="page">
+            <h1>Loops</h1>
+            <p>Use the <span class="tag">while</span> loop to repeat a block of code as long as a condition remains true.</p>
+            
+            <div class="code-block">
+                <span class="kw">set</span> i = 1;<br>
+                <span class="kw">while</span> i < 6 <span class="kw">do</span><br>
+                &nbsp;&nbsp;<span class="kw">say</span> <span class="str">"Iteration:"</span> i;<br>
+                &nbsp;&nbsp;<span class="kw">set</span> i = i + 1;<br>
+                <span class="kw">end</span>;
+            </div>
+        </div>
+
+        <div id="system" class="page">
+            <h1>System Control</h1>
+            <p>Spark can interact directly with your Operating System to automate tasks, launch apps, or manage files.</p>
+            
+            <table class="cmd-table">
+                <tr><th>Command</th><th>Effect</th></tr>
+                <tr><td><span class="tag">web</span></td><td>Opens a URL in the default web browser.</td></tr>
+                <tr><td><span class="tag">run</span></td><td>Executes a system command or opens an app.</td></tr>
+                <tr><td><span class="tag">create</span></td><td>Creates a new file at the specified path.</td></tr>
+                <tr><td><span class="tag">delete</span></td><td>Removes a file from the system.</td></tr>
+            </table>
+
+            <div class="code-block">
+                <span class="kw">web</span> <span class="str">"https://google.com"</span>;<br>
+                <span class="kw">create</span> <span class="str">"notes.txt"</span>;<br>
+                <span class="kw">run</span> <span class="str">"notepad.exe"</span>;
+            </div>
+        </div>
+
+        <div id="functions" class="page">
+            <h1>Functions</h1>
+            <p>Encapsulate logic into reusable blocks. Use <span class="tag">define</span> to create a function and <span class="tag">call</span> to run it.</p>
+            
+            <div class="code-block">
+                <span class="kw">define</span> startup;<br>
+                &nbsp;&nbsp;<span class="kw">say</span> <span class="str">"System Initialized..."</span>;<br>
+                &nbsp;&nbsp;<span class="kw">run</span> <span class="str">"spotify.exe"</span>;<br>
+                <span class="kw">end_func</span>;<br><br>
+                <span class="kw">call</span> startup;
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        function openPage(pageId, btn) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(p => p.classList.remove('active'));
+
+            document.getElementById(pageId).classList.add('active');
+
+            const buttons = document.querySelectorAll('nav button');
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.getElementById('content').scrollTop = 0;
+        }
+    </script>
+</body>
+</html>
